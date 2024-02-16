@@ -15,7 +15,7 @@ async function getWeatherData(city) {
     try {
         const response = await fetch(weatherUrl);
         const weatherData = await response.json();
-        return weatherData;
+        return console.log("weather is {`weatherData.main.feels_like`}";
     } catch (error) {
         console.log("Error fetching weather data:", error);
         throw error;
