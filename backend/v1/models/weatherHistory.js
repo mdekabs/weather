@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const weatherHistorySchema = new mongoose.Schema({
   userId: {
     type:mongoose.Schema.Types.ObjectId,
@@ -20,7 +20,8 @@ const weatherHistorySchema = new mongoose.Schema({
   timestamp: {
     type: Date,
     default: Date.now
-  });
+  }
+});
 
-const weatherHistory = mongoose.model("weatherHistory");
-modue.exports = weatherHistory;
+const weatherHistory = mongoose.model("weatherHistory", weatheHistorySchema);
+export default weatherHistory;
