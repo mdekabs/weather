@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-
+import favoriteLocation from "./favoriteLocation.js"
 /**
  * @typedef {Object} Notification
  * @property {string} message - The notification message
@@ -55,7 +55,11 @@ const userSchema = new mongoose.Schema({
   notificationList: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
     description: "The list of notifications for the user"
+  },
+  favoriteLocations: {
+    type: [{type: mongoose.Schema.Types.ObjectId, ref: "favoriteLocation"}],
   }
+
 });
 
 /**
