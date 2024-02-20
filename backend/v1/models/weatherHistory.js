@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./userModel.js";
 const weatherHistorySchema = new mongoose.Schema({
   userId: {
     type:mongoose.Schema.Types.ObjectId,
@@ -23,5 +24,5 @@ const weatherHistorySchema = new mongoose.Schema({
   }
 });
 
-const weatherHistory = mongoose.model("weatherHistory", weatheHistorySchema);
+const weatherHistory = mongoose.model("weatherHistory", weatherHistorySchema);
 export default weatherHistory;
