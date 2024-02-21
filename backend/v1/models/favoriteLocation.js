@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const favoriteLocationSchema = new Schema({
   city: {
     type: String,
-    require: true
+    required: true
   },
   latitude: {
     type: Number,
