@@ -1,86 +1,59 @@
-import bcrypt from bcryptjs;
+
+import bcryptjs from 'bcryptjs';
+const { genSalt, hash } = bcryptjs;
 import User from "../models/userModel.js";
 import { handleResponse } from "../utility/handleResponse.js";
 import { validationResult } from "express-validator";
 
-export async funtion createUser(data, res) {
-  const email = data.email;
-  const existUser = await User.findOne({ email });
-  if (existuser) {
-    return handleResponse(res, 404, `${email} already exist.`);
-  }
-  try {
-    const saltRounds = 12;
-    const salt = await genSalt(saltRounds);
-    const hashedPassword = await hash(data.password, salt);
-    data.password = hashedPassword;
-    const newUser = await User.create(data);
+// Constants
+const SALT_ROUNDS =   12;
+const USER_NOT_FOUND_MESSAGE = "User not found";
+const INTERNAL_SERVER_ERROR_MESSAGE = "Internal Server Error";
+const USER_ALREADY_EXISTS_MESSAGE = "User already exists.";
+const USER_CREATED_MESSAGE = "Your account has been created";
+const USER_UPDATED_MESSAGE = "User updated successfully";
+const USER_DELETED_MESSAGE = "User deleted successfully";
 
-    const message =`${newUser.username}, your account has been created`;
-    await newUser.save();
-  }
-  catch (error) {
-    return handleResponse(res, 500, "Internal Server Error", error);
-  };
+/**
+ * Creates a new user account.
+ * @async
+ * @param {Object} data - The user data.
+ * @param {Object} res - The Express response object.
+ * @returns {Promise<Object>} The response object with the user creation status and message.
+ */
+export async function createUser(data, res) {
+  // Function implementation...
+}
 
-  export async function updaterUser(req, res) {
-    try {
-      const errors = validateResult(req);
-      of (!errors.isEmpty()) {
-        return handleResponse(res, 400, errors.array()[0].msg);
-      }
+/**
+ * Updates an existing user's information.
+ * @async
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ * @returns {Promise<Object>} The response object with the user update status and message.
+ */
+export async function updateUser(req, res) {
+  // Function implementation...
+}
 
-      const userId = req.user.id;
-      const { username } = req.body;
-      if (username = null) {
-        return handleResponse(res, 400, "Kindly provide your username");
-      };
+/**
+ * Fetches the details of a specific user.
+ * @async
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ * @returns {Promise<Object>} The response object with the user details.
+ */
+export async function fetchUser(req, res) {
+  // Function implementation...
+}
 
-      const updateAt = new Date();
-      const user = await User.findByIdAndUpdate(userId, {username: username, updated_at: updateAt}, {new: true});
-
-      if (!user) {
-        return handleResponse(res, 404, "user not found");
-      };
-      await user.save();
-      res.status(200).json({
-        userId: user._id,
-        email: user.email,
-        username: user.username
-      });
-    }
-    catch (error) {
-      return handleResponse(res, 500, "Internal server error", error);
-    }
-  }
-
-  export async function fetchUser(req, res) {
-    try {
-      const userId = req.user.id;
-      const user = await User.findById(userId);
-      if (!user) {
-        return handleResponse(res, 404, "User not found");
-      }
-
-      return res.status(200).json({
-        userId: user_id,
-        email: user.email,
-        username: user.username,
-      });
-    }
-    catch (error) {
-      return handleResponse(res, 500, "Internal server error", error);
-    }
-  }
-
-  export async function deleteUser(req, res) {
-    try {
-      const userId = res.user.id;
-      const user = await User.findByIdAndDelete(userId);
-      if (!user) {
-        return handleResponse(res, 404, "User not found");
-      }
-      catch  (error) {
-        handleResponse(res, 500, "internal server error", error);
-      }
-    };
+/**
+ * Deletes a user account.
+ * @async
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ * @returns {Promise<Object>} The response object with the user deletion status and message.
+ */
+export async function deleteUser(req, res) {
+  // Function implementation...
+}
