@@ -8,8 +8,12 @@ const logger = (req, res, next) => {
 };
 
 const errorLogger = (err, req, res, next) => {
-  errorLogStream.write(`[${new Date().toISOString()}] ${err.message} - ${req.method} ${req.url}\n`);
+  errorLogStream.write(`[${new Date().toISOString()}] ${err.message || err.toString()} - ${req.method} ${req.url}\n`);
   next(err);
 };
 
-export { logger, errorLogger };
+const errorHandler = (err, req, res, next) => {
+  console.log(error.stack);
+  res.status(500).send("something is wrong!");
+};
+export { logger, errorLogger, errorHandler };
