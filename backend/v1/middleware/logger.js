@@ -4,6 +4,17 @@ import path from 'path';
 import { fileURLToPath } from "url";
 import { INTERNAL_SERVER_ERROR } from 'http-status-codes';
 
+// Constants
+const LOG_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
+const ACCESS_LOG_FILE = path.join(LOG_DIRECTORY, 'access.log');
+const ERROR_LOG_FILE = path.join(LOG_DIRECTORY, 'error.log');
+const LOG_FILE_FLAGS = { flags: 'a' };
+const ERROR_MESSAGE = 'Something broke!';
+
+// Define streams for logging
+const accessLogStream = fs.createWriteStream(ACCESS_LOG_FILE, LOG_FILE_FLAGS);
+const errorLogStream = fs.createWriteStream(ERROR_LOG_FILE, LOG_FILE_FLAGS);
+
 /**
  * @swagger
  * components:
@@ -43,13 +54,6 @@ import { INTERNAL_SERVER_ERROR } from 'http-status-codes';
  *       description: The next middleware function.
  */
 
-// Define streams for logging
-// Get the directory name for the current module
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
-const errorLogStream = fs.createWriteStream(path.join(__dirname, 'error.log'), { flags: 'a' });
-
 /**
  * Logs the request method and URL.
  * @param {Object} req - The request object.
@@ -82,7 +86,7 @@ const errorLogger = (err, req, res, next) => {
  */
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
-  res.status(INTERNAL_SERVER_ERROR).send('Something broke!');
+  res.status(INTERNAL_SERVER_ERROR).send(ERROR_MESSAGE);
 };
 
 export { logger, errorLogger, errorHandler };
