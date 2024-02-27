@@ -1,4 +1,4 @@
-import { getWeatherData } from '../service/weatherService.js';
+import { getWeatherData, getWeatherForecast } from '../service/weatherService.js';
 import { handleResponse } from "../utility/handleResponse.js";
 
 /**
@@ -11,7 +11,13 @@ import { handleResponse } from "../utility/handleResponse.js";
 export const fetchWeather = async (req, res) => {
   try {
     const { city } = req.params;
-    const weatherData = await getWeatherData(city);
+    const currentWeather = await getWeatherData(city);
+    const forecast = await getWeatherForcast(city);
+
+    const weatherData = {
+      current: currentWeather,
+      forcast: forcast
+    };
     // Using handleResponse to send the weather data
     handleResponse(res,   200, weatherData);
   } catch (error) {
